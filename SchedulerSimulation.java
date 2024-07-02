@@ -121,6 +121,7 @@ public class SchedulerSimulation {
             }
         }
 
+
         double lastCustomer = (double) (decisions.length -1);
         return costMap.get(lastCustomer);
         
