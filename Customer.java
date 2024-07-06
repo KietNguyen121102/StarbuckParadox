@@ -9,8 +9,13 @@ public class Customer {
     int index;
 
 
+    
     public Customer(int arrival){
         arrivalTime = arrival;
+    }
+
+    public double getWaitTime(){
+        return departureTime - arrivalTime;
     }
 
     public double getArrivalTime(){

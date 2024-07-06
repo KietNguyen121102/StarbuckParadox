@@ -1,9 +1,14 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
 
-public class noReSchedulerSimulation {
-    public static ArrayList<Double> noReSchedulerSimulation(int numOnline, int numPhysical, double cost, int ArrivalRate, double alpha, int[] decisions) {
-        // every minute in an 8-hour working day
-         int numCustomer = 0;
+public class costMatrixGenerator {
+    
+    public static ArrayList<Double> costGenerator(int numOnline, int numPhysical, int cost, int ArrivalRate, double alpha, int[] decisions) {
+
+        int numCustomer = 0;
         int numCustomerServed = 0;
         HashMap<Double, Double> costMap = new HashMap<Double,Double>();
         ArrayList<Double> costMatrix = new ArrayList<Double>();
@@ -62,13 +67,17 @@ public class noReSchedulerSimulation {
         
 
             for (int num = 0; num < numOnline; num++) {
-                if (time >= onlineBarista[num] && numCustomerServed < numCustomer && (queue.size() != 0)) {
+                if (time >= onlineBarista[num] && numCustomerServed < numCustomer && (queue.size() != 0 || line.size() != 0)) {
                     Customer servingCustomer = new Customer(-1);
-                  
-                    servingCustomer = queue.poll();
-                    numCustomerServed++; 
-                    servingCustomer.beOnline();
-                   
+                    if ((queue.size() != 0)) {
+                        servingCustomer = queue.poll();
+                        numCustomerServed++; 
+                        servingCustomer.beOnline();
+                    } else if (line.size() != 0) {
+                        servingCustomer = line.poll();
+                        numCustomerServed++;
+                    }
+
                     // System.out.println("Online barista " + num + " serving customer " + servingCustomer.arrivalTime + " at time " + time);
                     onlineBarista[num] = (time + cost);
                     
@@ -89,12 +98,16 @@ public class noReSchedulerSimulation {
 
             for (int num = 0; num < numPhysical; num++) {
                 Customer servingCustomer2 = new Customer(-1);
-                if (time >= physicalBarista[num] && numCustomerServed < numCustomer && line.size() != 0) {
+                if (time >= physicalBarista[num] && numCustomerServed < numCustomer && (queue.size() != 0 || line.size() != 0)) {
                    
-               
-                    servingCustomer2 = line.poll();
-                    numCustomerServed++;
-                   
+                    if ((line.size() != 0)) {
+                        servingCustomer2 = line.poll();
+                        numCustomerServed++;
+                    } else if (queue.size() != 0) {
+                        servingCustomer2 = queue.poll();
+                        numCustomerServed++;
+                        servingCustomer2.beOnline();
+                    }
 
                     // System.out.println("Physical barista " + num + " serving customer " + servingCustomer2.arrivalTime + " at time " + time);
                     physicalBarista[num] = (time + cost);
@@ -122,7 +135,6 @@ public class noReSchedulerSimulation {
 
 
         return costMatrix;
-
-        
     }
+
 }

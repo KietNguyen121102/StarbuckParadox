@@ -126,6 +126,8 @@ public class Greedy{
             total += costMap.get((double)i);
         }
 
+        System.out.println("No reallocation Greedy Strategy: " + greedyStrategy + " with cost " + costMap);
+
             
         return total;
     }
@@ -253,13 +255,14 @@ public class Greedy{
            
 
         }
-        // System.out.println(costMap);
 
         double total = 0;
         for(int i = 0; i < numCustomer; i++){
             total += costMap.get((double)i);
         }
 
+        System.out.println("Reallocation Greedy Strategy: " + greedyStrategy + " with cost " + costMap);
+        
             
         return total;
     }
