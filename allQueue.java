@@ -10,7 +10,7 @@ public class allQueue {
             decision[i] =1;
         }
 
-        ArrayList<Double> costMatrix = costMatrixGenerator.costGenerator(numOnline, numPhysical, cost, arrivalRate, alpha, decision);
+        ArrayList<Double> costMatrix = costGen.costGenerator(numOnline, numPhysical, cost, arrivalRate, alpha, decision);
         for(int i = 0; i < costMatrix.size(); i++){
             totalCost += costMatrix.get(i);
         }

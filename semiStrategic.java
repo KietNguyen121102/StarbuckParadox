@@ -69,8 +69,9 @@ public class semiStrategic {
                     // System.out.println(ifQueue.length);
                 
 
-                    double queueExpectedCost = SchedulerSimulation.schedulerSimulation(numOnline, numPhysical, cost, arrivalRate, alpha, ifQueue);
-                    double lineExpectedCost = SchedulerSimulation.schedulerSimulation(numOnline, numPhysical, cost, arrivalRate, alpha, ifLine);
+                    double queueExpectedCost = costGen.costGenerator(numOnline, numPhysical, cost, arrivalRate, alpha, ifQueue).get(ifQueue.length-1);
+                    double lineExpectedCost = costGen.costGenerator(numOnline, numPhysical, cost, arrivalRate, alpha, ifQueue).get(ifLine.length-1);
+                  
                   
                     if(numPhysical == 0){lineExpectedCost = queueExpectedCost+1;}
                     if(numOnline == 0){queueExpectedCost = lineExpectedCost+1;}
@@ -225,8 +226,8 @@ public class semiStrategic {
                     // System.out.println(ifQueue.length);
                 
 
-                    double queueExpectedCost = SchedulerSimulation.schedulerSimulation(numOnline, numPhysical, cost, arrivalRate, alpha, ifQueue);
-                    double lineExpectedCost = SchedulerSimulation.schedulerSimulation(numOnline, numPhysical, cost, arrivalRate, alpha, ifLine);
+                    double queueExpectedCost = noReCostGen.costGenerator(numOnline, numPhysical, cost, arrivalRate, alpha, ifQueue).get(ifQueue.length-1);
+                    double lineExpectedCost = noReCostGen.costGenerator(numOnline, numPhysical, cost, arrivalRate, alpha, ifQueue).get(ifLine.length-1);
                   
                     if(numPhysical == 0){lineExpectedCost = queueExpectedCost+1;}
                     if(numOnline == 0){queueExpectedCost = lineExpectedCost+1;}

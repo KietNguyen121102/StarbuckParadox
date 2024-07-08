@@ -39,15 +39,16 @@ public class Greedy{
                 }
 
                 ifQueue[ifQueue.length-1] = 1;
-                ifQueue[ifLine.length-1] = 0;
+                ifLine[ifLine.length-1] = 0;
 
                 
-                double queueExpectedCost = SchedulerSimulation.schedulerSimulation(numOnline, numPhysical, cost, arrivalRate, alpha, ifQueue);
-                double lineExpectedCost = SchedulerSimulation.schedulerSimulation(numOnline, numPhysical, cost, arrivalRate, alpha, ifLine);
+                double queueExpectedCost = noReCostGen.costGenerator(numOnline, numPhysical, cost, arrivalRate, alpha, ifQueue).get(ifQueue.length - 1);
+                double lineExpectedCost = noReCostGen.costGenerator(numOnline, numPhysical, cost, arrivalRate, alpha, ifLine).get(ifQueue.length - 1);
                 
                 if(numPhysical == 0){lineExpectedCost = queueExpectedCost+1;}
                 if(numOnline == 0){queueExpectedCost = lineExpectedCost+1;}
 
+                // System.out.println("At customer: " + customer.arrivalTime + "queue cost: " + queueExpectedCost + " ,line cost: " + lineExpectedCost);
 
                 if(lineExpectedCost < queueExpectedCost){
                     line.add(customer);
@@ -169,11 +170,15 @@ public class Greedy{
                     ifLine[i] = greedyStrategy.get(i);
                 }
 
+                
                 ifQueue[ifQueue.length-1] = 1;
-                ifQueue[ifLine.length-1] = 0;
+                ifLine[ifLine.length-1] = 0;
 
-                double queueExpectedCost = SchedulerSimulation.schedulerSimulation(numOnline, numPhysical, cost, arrivalRate, alpha, ifQueue);
-                double lineExpectedCost = SchedulerSimulation.schedulerSimulation(numOnline, numPhysical, cost, arrivalRate, alpha, ifLine);
+
+
+                double queueExpectedCost = costGen.costGenerator(numOnline, numPhysical, cost, arrivalRate, alpha, ifQueue).get(ifQueue.length - 1);
+                double lineExpectedCost = costGen.costGenerator(numOnline, numPhysical, cost, arrivalRate, alpha, ifLine).get(ifQueue.length - 1);
+                // System.out.println("At customer: " + customer.arrivalTime + "queue cost: " + queueExpectedCost + " ,line cost: " + lineExpectedCost);
                 
                 if(numPhysical == 0){lineExpectedCost = queueExpectedCost+1;}
                 if(numOnline == 0){queueExpectedCost = lineExpectedCost+1;}

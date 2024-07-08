@@ -1,11 +1,9 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Queue;
 
-public class costMatrixGenerator {
-    
+public class noReCostGen {
     public static ArrayList<Double> costGenerator(int numOnline, int numPhysical, int cost, int ArrivalRate, double alpha, int[] decisions) {
 
         int numCustomer = 0;
@@ -67,16 +65,13 @@ public class costMatrixGenerator {
         
 
             for (int num = 0; num < numOnline; num++) {
-                if (time >= onlineBarista[num] && numCustomerServed < numCustomer && (queue.size() != 0 || line.size() != 0)) {
+                if (time >= onlineBarista[num] && numCustomerServed < numCustomer && (queue.size() != 0)) {
                     Customer servingCustomer = new Customer(-1);
-                    if ((queue.size() != 0)) {
-                        servingCustomer = queue.poll();
-                        numCustomerServed++; 
-                        servingCustomer.beOnline();
-                    } else if (line.size() != 0) {
-                        servingCustomer = line.poll();
-                        numCustomerServed++;
-                    }
+                   
+                    servingCustomer = queue.poll();
+                    numCustomerServed++; 
+                    servingCustomer.beOnline();
+                   
 
                     // System.out.println("Online barista " + num + " serving customer " + servingCustomer.arrivalTime + " at time " + time);
                     onlineBarista[num] = (time + cost);
@@ -98,16 +93,12 @@ public class costMatrixGenerator {
 
             for (int num = 0; num < numPhysical; num++) {
                 Customer servingCustomer2 = new Customer(-1);
-                if (time >= physicalBarista[num] && numCustomerServed < numCustomer && (queue.size() != 0 || line.size() != 0)) {
+                if (time >= physicalBarista[num] && numCustomerServed < numCustomer && (line.size() != 0)) {
                    
-                    if ((line.size() != 0)) {
-                        servingCustomer2 = line.poll();
-                        numCustomerServed++;
-                    } else if (queue.size() != 0) {
-                        servingCustomer2 = queue.poll();
-                        numCustomerServed++;
-                        servingCustomer2.beOnline();
-                    }
+                   
+                    servingCustomer2 = line.poll();
+                    numCustomerServed++;
+                   
 
                     // System.out.println("Physical barista " + num + " serving customer " + servingCustomer2.arrivalTime + " at time " + time);
                     physicalBarista[num] = (time + cost);
@@ -136,5 +127,4 @@ public class costMatrixGenerator {
 
         return costMatrix;
     }
-
 }

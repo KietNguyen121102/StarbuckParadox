@@ -9,7 +9,6 @@ public static void generateAllBinaryStrings(int n, int arr[], int i)
    
     if (i == n)
     {
-       
         int[] combination = new int[n];
         for(int j = 0; j < n; j++){combination[j] = arr[j];}
         result.add(combination);
