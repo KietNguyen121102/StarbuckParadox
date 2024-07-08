@@ -8,7 +8,7 @@ public class helperDistribution {
         return (int) Math.round(cost);
     }
 
-    public static int costExponentialDist(double lambda) {
+    public static int gapExponentialDist(double lambda) {
         Random random = new Random();
         double uniform = random.nextDouble();
         double cost = Math.log(1 - uniform) / (-lambda);
