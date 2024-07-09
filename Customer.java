@@ -3,11 +3,16 @@ public class Customer {
     double arrivalTime;
     double departureTime;
     double waitTime;
+    int orderCost;
     
     boolean online = false;
     int preferences; 
     int index;
 
+
+    public void setCost(int cost){
+        orderCost = cost;
+    }
 
     
     public Customer(int arrival){

@@ -64,14 +64,16 @@ public class semiStrategic {
                     }
 
                     ifQueue[ifQueue.length-1] = 1;
-                    ifQueue[ifLine.length-1] = 0;
+                    ifLine[ifLine.length-1] = 0;
 
                     // System.out.println(ifQueue.length);
                 
 
                     double queueExpectedCost = costGen.costGenerator(numOnline, numPhysical, cost, arrivalRate, alpha, ifQueue).get(ifQueue.length-1);
                     double lineExpectedCost = costGen.costGenerator(numOnline, numPhysical, cost, arrivalRate, alpha, ifLine).get(ifLine.length-1);
-                  
+                    
+                    // System.out.println("At customer: " + customer.arrivalTime + "queue cost: " + queueExpectedCost + " ,line cost: " + lineExpectedCost);
+
                   
                     if(numPhysical == 0){lineExpectedCost = queueExpectedCost+1;}
                     if(numOnline == 0){queueExpectedCost = lineExpectedCost+1;}
@@ -151,7 +153,7 @@ public class semiStrategic {
             }
         }
 
-        // System.out.println(costMap);
+        // System.out.println(currentStrategy);
 
         double total = 0;
         for(int i = 0; i < numCustomer; i++){
@@ -210,7 +212,6 @@ public class semiStrategic {
                     numCustomerArrived++;
 
                     // System.out.println("Customer " + customer.getArrivalTime() + " chooses online line");
-
                 } else {
                     int[] ifQueue = new int[currentStrategy.size()+1];
                     int[] ifLine = new int[currentStrategy.size() +1];
@@ -221,7 +222,7 @@ public class semiStrategic {
                     }
 
                     ifQueue[ifQueue.length-1] = 1;
-                    ifQueue[ifLine.length-1] = 0;
+                    ifLine[ifLine.length-1] = 0;
 
                     // System.out.println(ifQueue.length);
                 

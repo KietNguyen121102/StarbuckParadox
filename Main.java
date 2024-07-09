@@ -11,60 +11,79 @@ public class Main {
       
 
         for(int numOnline = 1; numOnline <= 4; numOnline++){
-            // for(double alpha = 0.2; alpha <= 0.8; alpha = alpha + 0.2){
-                // for(int numCustomer = 1; numCustomer <= 15; numCustomer = numCustomer + 1){
-                for(double greedyPopulation = 0.0; greedyPopulation <= 1.0; greedyPopulation = greedyPopulation + 0.2){
-                    for(double physicalOverOnline = 0.0; physicalOverOnline <= 1.0; physicalOverOnline = physicalOverOnline + 0.2){
+            for(double alpha = 0.2; alpha <= 0.8; alpha = alpha + 0.2){
+                for(int numCustomer = 1; numCustomer <= 100; numCustomer = numCustomer + 1){
+                // for(double greedyPopulation = 0.0; greedyPopulation <= 1.0; greedyPopulation = greedyPopulation + 0.2){
+                //     for(double physicalOverOnline = 0.0; physicalOverOnline <= 1.0; physicalOverOnline = physicalOverOnline + 0.2){
                         int numPhysical = 5 - numOnline;
-                        double physicalPopulation = (1-greedyPopulation)*physicalOverOnline;
-                        double onlinePopulation = (1-greedyPopulation)*(1-physicalOverOnline);
+                        // double physicalPopulation = (1-greedyPopulation)*physicalOverOnline;
+                        // double onlinePopulation = (1-greedyPopulation)*(1-physicalOverOnline);
                     // double noReGreedyCost = Greedy.noReallocationGreedy(numOnline, numPhysical, cost, arrivalRate, alpha, numCustomer);
                     // double reGreedyCost = Greedy.ReallocationGreedy(numOnline, numPhysical, cost, arrivalRate, alpha, numCustomer);
                     // double optimalNoRe = Optimal.optimalNoReallocation(numOnline, numPhysical, cost, arrivalRate, alpha, numCustomer);
 
         //Semi-strategic
-                        double reSemiStrategic = 0;
-                        double noReSemiStrategic = 0;
+                        // double reSemiStrategic = 0;
+                        // double noReSemiStrategic = 0;
 
-                        for(int i = 0; i <= 100; i++)
-                        {reSemiStrategic += semiStrategic.reallocSemiStrategic(numOnline, numPhysical, cost, arrivalRate, 0.7, physicalPopulation, onlinePopulation, 100);}
-                        for(int j = 0; j <= 100; j++)
-                        {noReSemiStrategic += semiStrategic.noReallocSemiStrategic(numOnline, numPhysical, cost, arrivalRate, 0.7, physicalPopulation, onlinePopulation, 100);}
+                        // for(int j = 0; j <= 100; j++)
+                        // {reSemiStrategic += semiStrategic.reallocSemiStrategic(numOnline, numPhysical, cost, arrivalRate, 0.7, physicalPopulation, onlinePopulation, 100);}
+                        // for(int j = 0; j <= 100; j++)
+                        // {noReSemiStrategic += semiStrategic.noReallocSemiStrategic(numOnline, numPhysical, cost, arrivalRate, 0.7, physicalPopulation, onlinePopulation, 100);}
  
-        //SPNE
+            //SPNE
                   
-                    // double SPNECost = SPNEwithPrinciple.SPNEPrinciple(numOnline, numPhysical, cost, arrivalRate, alpha, numCustomer);
-                    // double allQueueCost = allQueue.allQueue(numOnline, numPhysical, cost, arrivalRate, alpha, numCustomer);
-                    // double allLineCost = allQueueCost/alpha;
+                        // double SPNECost = SPNEwithPrinciple.SPNEPrinciple(numOnline, numPhysical, cost, arrivalRate, alpha, numCustomer);
+                        // double allQueueCost = allQueue.allQueue(numOnline, numPhysical, cost, arrivalRate, alpha, numCustomer);
+                        // double allLineCost = allQueueCost/alpha;
 
 
                                   
-                    // ArrayList<Double> result = new ArrayList<Double>();
-                    // result.add((double) numOnline); 
-                    // result.add((double) numPhysical);
-                    // result.add(alpha);
-                    // result.add((double) numCustomer);
-                    // result.add(noReGreedyCost);
-                    // result.add(reGreedyCost);
-                    // result.add(optimalNoRe);
-                    // result.add(SPNECost);
-                    // result.add(allQueueCost);
-                    // result.add(allLineCost);
+                        // ArrayList<Double> result = new ArrayList<Double>();
+                        // result.add((double) numOnline); 
+                        // result.add((double) numPhysical);
+                        // result.add(alpha);
+                        // result.add((double) numCustomer);
+                        // result.add(noReGreedyCost);
+                        // result.add(reGreedyCost);
+                        // result.add(optimalNoRe);
+                        // result.add(SPNECost);
+                        // result.add(allQueueCost);
+                        // result.add(allLineCost);
 
-                        ArrayList<Double> semiStrategicResult = new ArrayList<Double>();
-                        semiStrategicResult.add((double) numOnline);
-                        semiStrategicResult.add((double) numPhysical);
-                        semiStrategicResult.add((double) physicalOverOnline); 
-                        semiStrategicResult.add((double) greedyPopulation);
-                        semiStrategicResult.add(reSemiStrategic/100);
-                        semiStrategicResult.add(noReSemiStrategic/100);
+            //Not constant cost and arrival time
+
+                    double[] costEachRunWithRe = new double[100];
+                    double[] costEachRunNoRe = new double[100];
+                    for(int i = 0; i < 100; i++){
+                        costEachRunWithRe[i] = notConstantVar.ReallocationGreedy(numOnline, numPhysical, alpha, numCustomer);
+                        costEachRunNoRe[i] = notConstantVar.noReallocationGreedy(numOnline, numPhysical, alpha, numCustomer);
+                    }
+
+                    
+
+                    double meanNoRe = helperDistribution.calculateMean(costEachRunNoRe);
+                    double meanWithRe = helperDistribution.calculateMean(costEachRunWithRe);
+                    double SDNoRe = helperDistribution.calculateStandardDeviation(costEachRunNoRe, meanNoRe);
+                    double SDRe = helperDistribution.calculateStandardDeviation(costEachRunWithRe, meanWithRe);
+
+                        ArrayList<Double> notConstantResult = new ArrayList<Double>();
+                        notConstantResult.add((double) numOnline);
+                        notConstantResult.add((double) numPhysical);
+                        notConstantResult.add(alpha); 
+                        notConstantResult.add((double) numCustomer);
+                        notConstantResult.add(meanNoRe);
+                        notConstantResult.add(SDNoRe);
+                        notConstantResult.add(meanWithRe);
+                        notConstantResult.add(SDRe);
+                        
                   
 
-                    try(FileWriter f = new FileWriter("semiStrategicComparison.txt", true); 
+                    try(FileWriter f = new FileWriter("notConstantVar" + alpha + ".txt", true); 
                         BufferedWriter b = new BufferedWriter(f); 
                         PrintWriter p = new PrintWriter(b);) {
-                            p.println(semiStrategicResult);
-                            System.out.println("Add sucessfully");
+                            p.println(notConstantResult);
+                            // System.out.println("Add sucessfully");
                         }
                         catch (IOException i){
                             i.printStackTrace();
